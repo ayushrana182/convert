@@ -99,10 +99,19 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "lookbook_m3b9xV": {
+      "type": "lookbook",
+      "name": "Lookbook",
+      "settings": {
+        "title": "Featured Lookbook",
+        "lookbook": "spring-sale"
+      }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "related-products",
+    "lookbook_m3b9xV"
   ]
 }

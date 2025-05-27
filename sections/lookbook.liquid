@@ -1,0 +1,204 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+  <div class="lookbook-section">
+    {% if section.settings.title %}
+      <h2 class="lookbook-section__title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    <div class="lookbook-collection">
+      {% for lookbook in shop.metaobjects.lookbook.values %}
+        <div>
+        {{ lookbook.products }}
+        </div>
+     
+        <div class="lookbook">
+          <h2 class="lookbook-title">{{ lookbook.title.value }}</h2>
+          
+          {% if lookbook.image.value %}
+            <div class="lookbook-image">
+              <img 
+                src="{{ lookbook.image.value | image_url: '800x' }}" 
+                alt="{{ lookbook.title.value }}"
+                width="800" 
+                height="800"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+          
+          {% if lookbook.description.value %}
+            <div class="lookbook-description">
+              {% assign desc_str = lookbook.description.value %}
+              {% if desc_str contains "type" and desc_str contains "children" %}
+                {% assign desc_obj = desc_str | replace: '=>', ':' | json_parse %}
+                {% for paragraph in desc_obj.children %}
+                  {% if paragraph.type == "paragraph" %}
+                    <p>
+                      {% for text in paragraph.children %}
+                        {{ text.value }}
+                      {% endfor %}
+                    </p>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {{ desc_str }}
+              {% endif %}
+            </div>
+          {% endif %}
+          
+          <div class="lookbook-products-grid">
+            {% for product in lookbook.products.value %}
+              <div class="lookbook-product-card">
+                <a href="/products/{{ product.handle }}" class="card-wrapper">
+                  <div class="card card--product">
+                    <div class="card__inner">
+                      <div class="card__media">
+                        <div class="media media--hover-effect">
+                          {% if product.featured_image %}
+                            <img
+                              src="{{ product.featured_image | image_url: '400x' }}"
+                              alt="{{ product.title | escape }}"
+                              loading="lazy"
+                              class="motion-reduce"
+                              width="400"
+                              height="400"
+                            >
+                          {% else %}
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="card__content">
+                        <div class="card__information">
+                          <h4 class="card__heading">
+                            <span class="full-unstyled-link">
+                              {{ product.title | escape }}
+                            </span>
+                          </h4>
+                          <div class="card-information">
+                            <span class="price">
+                              <span class="money">{{ product.price | money }}</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {% else %}
+              <div class="lookbook-empty" style="grid-column: 1/-1; text-align: center; padding: 20px;">
+                <p>No products found in this lookbook.</p>
+              </div>
+            {% endfor %}
+          </div>
+          
+          <hr class="lookbook-divider">
+        </div>
+      {% else %}
+        <div class="no-lookbooks">
+          <p>No lookbooks found. Please create lookbook metaobjects in your Shopify admin.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .lookbook-section {
+    margin: 40px 0;
+  }
+  
+  .lookbook-section__title {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .lookbook {
+    margin-bottom: 60px;
+  }
+  
+  .lookbook-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .lookbook-image {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .lookbook-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .lookbook-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 auto 30px;
+    max-width: 800px;
+    text-align: center;
+  }
+  
+  .lookbook-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .lookbook-divider {
+    margin: 40px 0;
+    border: 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  
+  .no-lookbooks {
+    text-align: center;
+    padding: 40px;
+    background: #f7f7f7;
+    border-radius: 8px;
+  }
+  
+  @media screen and (max-width: 990px) {
+    .lookbook-products-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media screen and (max-width: 749px) {
+    .lookbook-products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .lookbook-title {
+      font-size: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Lookbook",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Our Lookbooks"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbooks",
+      "category": "Custom Content"
+    }
+  ]
+}
+{% endschema %}
