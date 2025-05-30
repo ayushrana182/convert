@@ -74,6 +74,12 @@ On **product pages**, lookbooks automatically appear when:
 {%- endfor -%}
 ```
 
+### Running this solution locally
+- Clone the repository
+- Run `shopify theme pull` to pull the theme files from the Shopify store
+- Use `shopify theme dev -e development` to start the local dev server
+- Use `shopify theme push -e development` to push changes to the development environment
+
 
 
 
