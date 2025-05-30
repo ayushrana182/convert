@@ -1,0 +1,473 @@
+/* MAIN SECTION */
+.lookbook-section {
+  margin: 40px 0;
+}
+
+.lookbook-section__title {
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+/* LOOKBOOK ITEM */
+.lookbook-item {
+  margin-bottom: 60px;
+}
+
+.lookbook-item__title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.lookbook-item__description {
+  font-size: 16px;
+  margin-bottom: 30px;
+  text-align: center;
+  line-height: 1.6;
+  color: #666;
+}
+
+.lookbook-item__image {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.lookbook-image-container {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.lookbook-item__image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+/* LOOKBOOK TITLE LINKS */
+.lookbook-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.lookbook-title-link:hover {
+  text-decoration: underline;
+}
+
+/* HOTSPOTS */
+.lookbook-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+}
+
+.hotspot-button {
+  width: 44px;
+  height: 44px;
+  border: 2px solid #333;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+.hotspot-button:hover {
+  background: white;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.hotspot-dot {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.hotspot-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(51, 51, 51, 0.3);
+  border: 2px solid #333;
+  animation: pulse 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* PRODUCT HOTSPOTS */
+.product-hotspot {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.95);
+  border: 2px solid #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
+
+.product-hotspot:hover {
+  background: white;
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.product-hotspot-dot {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.product-hotspot-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(51, 51, 51, 0.3);
+  border: 2px solid #333;
+  animation: pulse 2.5s infinite;
+  pointer-events: none;
+}
+
+/* POPUPS */
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.hotspot-popup,
+.product-popup {
+  position: absolute;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transform: scale(0.9) translateY(10px);
+  display: none;
+}
+
+.hotspot-popup.active,
+.product-popup.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+  display: block;
+}
+
+/* HOTSPOT POPUP */
+.hotspot-popup {
+  width: 320px;
+}
+
+.hotspot-popup__content {
+  display: flex;
+  padding: 20px;
+  gap: 15px;
+}
+
+.hotspot-popup__image {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.hotspot-popup__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hotspot-popup__info {
+  flex: 1;
+}
+
+.hotspot-popup__title-link {
+  text-decoration: none;
+  display: block;
+}
+
+.hotspot-popup__title {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.hotspot-popup__title-link:hover .hotspot-popup__title {
+  color: #007acc;
+}
+
+.hotspot-popup__price {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+.hotspot-popup__link {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.hotspot-popup__link:hover {
+  background: #555;
+  transform: translateY(-1px);
+}
+
+/* PRODUCT POPUP */
+.product-popup {
+  width: 280px;
+}
+
+.product-popup__content {
+  display: flex;
+  padding: 15px;
+  gap: 12px;
+}
+
+.product-popup__image {
+  width: 70px;
+  height: 70px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f8f8f8;
+  flex-shrink: 0;
+}
+
+.product-popup__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-popup__info {
+  flex: 1;
+}
+
+.product-popup__title-link {
+  text-decoration: none;
+  display: block;
+}
+
+.product-popup__title {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.product-popup__title-link:hover .product-popup__title {
+  color: #007acc;
+}
+
+.product-popup__price {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+.product-popup__link {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.product-popup__link:hover {
+  background: #555;
+  transform: translateY(-1px);
+}
+
+/* PRODUCTS GRID */
+.lookbook-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.lookbook-product {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.lookbook-product:hover {
+  transform: translateY(-2px);
+}
+
+.lookbook-product__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  border-radius: 8px 8px 0 0;
+}
+
+.lookbook-product__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.lookbook-product__link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: #000;
+}
+
+.lookbook-product__link:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.lookbook-product__link:hover img {
+  transform: scale(1.05);
+}
+
+.lookbook-product__info {
+  padding: 12px;
+}
+
+.lookbook-product__title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.lookbook-product__title a {
+  color: #000;
+  text-decoration: none;
+}
+
+.lookbook-product__title a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.lookbook-product__price {
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+/* EMPTY STATE */
+.lookbook-empty {
+  text-align: center;
+  padding: 40px;
+  background: #f7f7f7;
+  border-radius: 8px;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 999px) {
+  .lookbook-products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .lookbook-item__title {
+    font-size: 24px;
+  }
+  
+  .hotspot-popup {
+    width: 260px;
+  }
+  
+  .product-popup {
+    width: 240px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .lookbook-products {
+    grid-template-columns: 1fr;
+  }
+  
+  .lookbook-section__title {
+    font-size: 28px;
+  }
+  
+  .lookbook-item__title {
+    font-size: 22px;
+  }
+  
+  .hotspot-popup {
+    width: 240px;
+  }
+  
+  .product-popup {
+    width: 220px;
+  }
+}

@@ -102,10 +102,9 @@
     },
     "lookbook_m3b9xV": {
       "type": "lookbook",
-      "name": "Lookbook",
       "settings": {
         "title": "Featured Lookbook",
-        "lookbook": "spring-sale"
+        "selected_lookbook": ""
       }
     }
   },

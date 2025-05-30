@@ -722,6 +722,63 @@
       {{ product | structured_data }}
     </script>
   </div>
+{% assign product_lookbooks = blank %}
+  {% assign lookbook_count = 0 %}
+
+  {% for lookbook in shop.metaobjects.lookbook.values %}
+    {% assign product_found_in_lookbook = false %}
+    {% for product_ref in lookbook.products.value %}
+      {% assign product_id = product_ref | split: '/' | last %}
+      {% if product_id == product.id %}
+        {% assign product_found_in_lookbook = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    
+    {% if product_found_in_lookbook %}
+      {% if lookbook_count == 0 %}
+        {% assign product_lookbooks = lookbook.title.value %}
+      {% else %}
+        {% assign product_lookbooks = product_lookbooks | append: '|' | append: lookbook.title.value %}
+      {% endif %}
+      {% assign lookbook_count = lookbook_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% if lookbook_count > 0 %}
+    <div class="product-lookbooks">
+      <h3>Featured in Lookbooks</h3>
+      
+      {% assign lookbook_titles = product_lookbooks | split: '|' %}
+      {% for lookbook_title in lookbook_titles limit: 3 %}
+        {% for lookbook in shop.metaobjects.lookbook.values %}
+          {% if lookbook.title.value == lookbook_title %}
+            <div class="product-lookbook-item">
+              <h4>
+                <a href="#" onclick="scrollToLookbook('{{ lookbook.id }}'); return false;">
+                  {{ lookbook.title.value }}
+                </a>
+              </h4>
+              {% if lookbook.description.value %}
+                <p>{{ lookbook.description.value | truncate: 100 }}</p>
+              {% endif %}
+            </div>
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      
+      {% comment %} Debug information {% endcomment %}
+      {% if settings.show_debug_info %}
+        <div class="debug-lookbooks" style="background: #f0f0f0; padding: 10px; margin-top: 10px; font-size: 12px;">
+          <strong>Debug:</strong><br>
+          Product ID: {{ product.id }}<br>
+          Lookbooks found: {{ lookbook_count }}<br>
+          Lookbook titles: {{ product_lookbooks }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
 </product-info>
 
 {% schema %}

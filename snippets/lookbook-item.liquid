@@ -1,0 +1,153 @@
+<div class="lookbook-item" id="lookbook-{{ lookbook.id }}">
+  {% comment %} Lookbook title (clickable) {% endcomment %}
+  <h2 class="lookbook-item__title">
+    {% if template.name != 'page' %}
+        {{ lookbook.title.value }}
+    {% else %}
+      {{ lookbook.title.value }}
+    {% endif %}
+  </h2>
+  
+  {% if lookbook.description.value %}
+    <div class="lookbook-item__description">
+    {{ lookbook.description | metafield_text  }}
+    </div>
+  {% endif %}
+  
+  {% comment %} Main lookbook image with hotspots {% endcomment %}
+  {% if lookbook.image.value %}
+    <div class="lookbook-item__image">
+      <div class="lookbook-image-container">
+        <img
+          src="{{ lookbook.image.value | image_url: width: 1200 }}"
+          alt="{{ lookbook.title.value | escape }}"
+          loading="lazy"
+          width="1200"
+          height="800"
+        >
+        
+        {% comment %} Lookbook hotspots on main image {% endcomment %}
+        {% if lookbook.hotspots.value.size > 0 %}
+          {% for hotspot in lookbook.hotspots.value %}
+            {% if hotspot and hotspot.product.value %}
+              {% assign y_pos = hotspot.y_position.value %}
+              {% if y_pos == blank %}
+                {% assign y_pos = hotspot.y_postion.value %}
+              {% endif %}
+              {% if y_pos == blank %}
+                {% assign y_pos = 30 %}
+              {% endif %}
+              
+              <div 
+                class="lookbook-hotspot" 
+                style="left: {{ hotspot.x_position.value | default: 50 }}%; top: {{ y_pos }}%;"
+                data-hotspot-id="lookbook-{{ loop_index }}-{{ forloop.index }}"
+              >
+                <button class="hotspot-button" type="button">
+                  <span class="hotspot-pulse"></span>
+                  <span class="hotspot-dot">+</span>
+                </button>
+                
+                <div class="hotspot-popup" id="popup-lookbook-{{ loop_index }}-{{ forloop.index }}">
+                  <div class="hotspot-popup__content">
+                    <div class="hotspot-popup__image">
+                      {% if hotspot.product.value.featured_image %}
+                        <img
+                          src="{{ hotspot.product.value.featured_image | image_url: width: 200 }}"
+                          alt="{{ hotspot.product.value.title | escape }}"
+                          width="200"
+                          height="200"
+                        >
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
+                    </div>
+                    <div class="hotspot-popup__info">
+                      <a href="{{ hotspot.product.value.url }}" class="hotspot-popup__title-link">
+                        <h4 class="hotspot-popup__title">{{ hotspot.product.value.title }}</h4>
+                      </a>
+                      <p class="hotspot-popup__price">{{ hotspot.product.value.price | money }}</p>
+                      <a href="{{ hotspot.product.value.url }}" class="hotspot-popup__link">View Product</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+  
+  {% comment %} Products grid with individual hotspots {% endcomment %}
+  <div class="lookbook-products">
+    {% for product_obj in lookbook.products.value %}
+      <div class="lookbook-product">
+        <div class="lookbook-product__image">
+          {% if product_obj.featured_image %}
+            <!-- Make entire image area clickable to product page -->
+            <a href="{{ product_obj.url }}" class="lookbook-product__link">
+              <img
+                src="{{ product_obj.featured_image | image_url: width: 400 }}"
+                alt="{{ product_obj.title | escape }}"
+                loading="lazy"
+                width="400"
+                height="400"
+              >
+            </a>
+            
+            <!-- Product hotspots from metafield -->
+            {% if product_obj.metafields.custom.hotspots.value %}
+              {% for hotspot in product_obj.metafields.custom.hotspots.value %}
+                {% if hotspot.product.value %}
+                  <div 
+                    class="product-hotspot" 
+                    data-hotspot-id="product-{{ forloop.parentloop.index }}-{{ product_obj.id }}-{{ forloop.index }}"
+                    style="left: {{ hotspot.x_position.value | default: 50 }}%; top: {{ hotspot.y_position.value | default: 50 }}%;"
+                  >
+                    <span class="product-hotspot-pulse"></span>
+                    <span class="product-hotspot-dot">+</span>
+                    
+                    <div class="product-popup" id="popup-product-{{ forloop.parentloop.index }}-{{ product_obj.id }}-{{ forloop.index }}">
+                      <div class="product-popup__content">
+                        <div class="product-popup__image">
+                          {% if hotspot.product.value.featured_image %}
+                            <img
+                              src="{{ hotspot.product.value.featured_image | image_url: width: 120 }}"
+                              alt="{{ hotspot.product.value.title | escape }}"
+                              width="120"
+                              height="120"
+                            >
+                          {% else %}
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {% endif %}
+                        </div>
+                        <div class="product-popup__info">
+                          <a href="{{ hotspot.product.value.url }}" class="product-popup__title-link">
+                            <h4 class="product-popup__title">{{ hotspot.product.value.title }}</h4>
+                          </a>
+                          <p class="product-popup__price">{{ hotspot.product.value.price | money }}</p>
+                          <a href="{{ hotspot.product.value.url }}" class="product-popup__link">View Product</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% else %}
+            <a href="{{ product_obj.url }}" class="lookbook-product__link">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </a>
+          {% endif %}
+        </div>
+        <div class="lookbook-product__info">
+          <h4 class="lookbook-product__title">
+            <a href="{{ product_obj.url }}">{{ product_obj.title }}</a>
+          </h4>
+          <p class="lookbook-product__price">{{ product_obj.price | money }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

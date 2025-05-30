@@ -78,10 +78,9 @@
     },
     "lookbook_WPTQt9": {
       "type": "lookbook",
-      "name": "Lookbook",
       "settings": {
         "title": "Featured Lookbook",
-        "lookbook": "spring-sale"
+        "selected_lookbook": "Spring Sale"
       }
     }
   },

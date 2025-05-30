@@ -1478,87 +1478,64 @@ a.product__text {
   text-transform: capitalize;
 }
 
-/* Lookbook styles for product page */
-/* Lookbook styles for product page */
+
 .product-lookbooks {
-  margin: 2em 0;
+  margin-top: 2em;
   padding: 1.5em;
-  background: #faf7f3;
+  background: #f9f9f9;
   border-radius: 8px;
-  border: 1px solid #eee;
+  border-left: 4px solid #333;
 }
 
 .product-lookbooks h3 {
-  margin-top: 0;
+  margin: 0 0 1em 0;
   font-size: 1.4em;
   color: #222;
   font-weight: 600;
 }
 
-.product-lookbooks .lookbook {
+.product-lookbooks .product-lookbook-item {
   margin-bottom: 1.5em;
   padding-bottom: 1em;
   border-bottom: 1px solid #e5e5e5;
 }
 
-.product-lookbooks .lookbook:last-child {
+.product-lookbooks .product-lookbook-item:last-child {
   border-bottom: none;
 }
 
-.product-lookbooks .lookbook h4 {
+.product-lookbooks .product-lookbook-item h4 {
   margin: 0 0 0.3em 0;
   font-size: 1.1em;
-  color: #b96e3a;
+  color: #333;
   font-weight: 500;
 }
 
-.product-lookbooks .lookbook p {
-  margin: 0 0 0.5em 0;
-  color: #444;
-  font-size: 1em;
-}
-
-.lookbook-products {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 1em;
-}
-
-.lookbook-product {
-  width: calc(33.33% - 8px);
-  min-width: 100px;
-  transition: transform 0.2s ease;
-}
-
-.lookbook-product a {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  align-items: center;
-}
-
-.lookbook-product img {
-  border-radius: 4px;
-  border: 1px solid #eee;
-  max-width: 100%;
-  height: auto;
-}
-
-.lookbook-product span {
-  margin-top: 6px;
-  font-size: 0.9em;
+.product-lookbooks .product-lookbook-item h4 a {
   color: #333;
-  text-align: center;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.lookbook-product:hover {
-  transform: translateY(-2px);
+.product-lookbooks .product-lookbook-item h4 a:hover {
+  color: #007acc;
+}
+
+.product-lookbooks .product-lookbook-item p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.4;
 }
 
 @media screen and (max-width: 749px) {
-  .lookbook-product {
-    width: calc(50% - 8px);
+  .product-lookbooks {
+    margin-top: 1.5em;
+    padding: 1em;
+  }
+  
+  .product-lookbooks h3 {
+    font-size: 1.2em;
   }
 }
 
